@@ -15,7 +15,7 @@ class Detection(Base):
     __tablename__ = "detections"
 
     id = Column(Integer, primary_key=True, index=True)
-    image_url = Column(String, nullable=False)
+    image_url = Column(String, nullable=True)
     top_prediction = Column(String, nullable=False)
     confidence = Column(Float, nullable=False)
     top5_json = Column(JSON, nullable=True)

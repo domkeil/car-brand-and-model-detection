@@ -39,28 +39,38 @@ async def detect(file: UploadFile = File(...), db: Session = Depends(get_db)):
     img_bytes = await file.read()
 
     # Volanie AWS SageMaker (cross-cloud!)
-    try:
-        ai = sagemaker_predict(img_bytes, file.content_type)
-    except Exception as e:
-        raise HTTPException(502, f"AI služba chyba: {e}")
+    ai = sagemaker_predict(img_bytes, file.content_type)
 
-    # Parse značky/modelu/roku
-    parts = ai["top_prediction"].split()
+    full_name = ai.get("top_prediction", "Unknown Unknown Unknown")
+    parts = full_name.split()
+
     year = None
-    if parts and parts[-1].isdigit() and 1900 <= int(parts[-1]) <= 2030:
-        year = int(parts[-1])
-        parts = parts[:-1]
-    brand = parts[0] if parts else ""
-    model_name = " ".join(parts[1:]) if len(parts) > 1 else ""
+    brand = "Unknown"
+    model_name = "Unknown"
 
-    # Ulož do DB
+    if parts:
+        # 1. Skúsime vytiahnuť rok (ak je to posledný prvok a je to číslo)
+        if parts[-1].isdigit() and len(parts[-1]) == 4:
+            year = parts.pop() # Odstráni a vráti posledný prvok (rok)
+        
+        # 2. Prvé slovo berieme vždy ako značku (napr. Volkswagen, BMW, Aston)
+        if parts:
+            brand = parts[0]
+            
+        # 3. Všetko medzi značkou a rokom je model (napr. Golf GTI, 3 Series)
+        if len(parts) > 1:
+            model_name = " ".join(parts[1:])
+        else:
+            model_name = brand # Ak je tam len jedno slovo
+
+    # Uloženie do DB (tvoj model Detection)
     d = Detection(
-        top_prediction=ai["top_prediction"],
-        confidence=ai["confidence"],
-        top5_json=json.dumps(ai["top5"]),
+        top_prediction=full_name,
+        confidence=ai.get("confidence", 0.0),
+        top5_json=ai.get("top5"), 
         brand=brand,
         model_name=model_name,
-        year=year,
+        year=year
     )
     db.add(d)
     db.commit()
