@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://car-detection-api-bmggcjf2ceetfghm.westeurope-01.azurewebsites.net'
+const API_URL = import.meta.env.VITE_API_URL ?? ''
 
 export async function detectCar(file) {
   const formData = new FormData()
