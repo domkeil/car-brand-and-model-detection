@@ -1,0 +1,105 @@
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface2);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: calc(var(--radius) - 5px);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.prediction {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.confidence {
+  margin-bottom: 1.5rem;
+}
+
+.confidence label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--surface2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress {
+  height: 100%;
+  background-color: var(--accent);
+  transition: width 0.3s;
+}
+
+.top5 {
+  margin-bottom: 1rem;
+}
+
+.top5 h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.top5 ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.top5 li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: var(--surface2);
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.conf {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}
