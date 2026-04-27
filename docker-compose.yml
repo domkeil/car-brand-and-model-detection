@@ -1,0 +1,53 @@
+services:
+
+  # ---- PostgreSQL ----
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-caruser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-carpass}
+      POSTGRES_DB: ${POSTGRES_DB:-car_detection}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-caruser}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ---- Backend (FastAPI) ----
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-caruser}:${POSTGRES_PASSWORD:-carpass}@db:5432/${POSTGRES_DB:-car_detection}
+      FRONTEND_URL: http://localhost:5173
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ---- Frontend (React + Vite) ----
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:8000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

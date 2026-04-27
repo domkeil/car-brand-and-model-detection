@@ -5,18 +5,31 @@ function Layout() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className={styles.logo}>🚗 CAR DETECTOR</div>
-        <nav className={styles.nav}>
-          <NavLink to="/detect" className={({isActive}) => isActive ? styles.active : ''}>
-            Detect
+        <div className={styles.headerInner}>
+          <NavLink to="/detect" className={styles.logoLink}>
+            <div className={styles.logo}>
+              <span className={styles.logoIcon}>◈</span>
+              <div>
+                <span className={styles.logoText}>AutoScan</span>
+                <span className={styles.logoSub}>AI Detection</span>
+              </div>
+            </div>
           </NavLink>
-          <NavLink to="/history" className={({isActive}) => isActive ? styles.active : ''}>
-            History
-          </NavLink>
-          <NavLink to="/stats" className={({isActive}) => isActive ? styles.active : ''}>
-            Stats
-          </NavLink>
-        </nav>
+          <nav className={styles.nav}>
+            <NavLink to="/detect" className={({isActive}) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
+              <span className={styles.navIcon}>⊞</span>
+              Detect
+            </NavLink>
+            <NavLink to="/history" className={({isActive}) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
+              <span className={styles.navIcon}>⧖</span>
+              History
+            </NavLink>
+            <NavLink to="/stats" className={({isActive}) => `${styles.navLink} ${isActive ? styles.active : ''}`}>
+              <span className={styles.navIcon}>◉</span>
+              Stats
+            </NavLink>
+          </nav>
+        </div>
       </header>
       <main className={styles.main}>
         <Outlet />
