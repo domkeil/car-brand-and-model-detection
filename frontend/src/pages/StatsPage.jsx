@@ -84,8 +84,8 @@ function StatsPage() {
                   axisLine={false}
                   tickLine={false}
                 />
-                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(245, 158, 11, 0.08)' }} />
-                <Bar dataKey="count" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(220, 38, 38, 0.08)' }} />
+                <Bar dataKey="count" fill="#dc2626" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -100,8 +100,8 @@ function StatsPage() {
               <AreaChart data={stats.detections_by_day} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
                 <defs>
                   <linearGradient id="accentGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#f59e0b" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#dc2626" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="#dc2626" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid stroke="#2a2a35" strokeDasharray="3 3" vertical={false} />
@@ -118,8 +118,8 @@ function StatsPage() {
                   tickLine={false}
                   allowDecimals={false}
                 />
-                <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#f59e0b', strokeWidth: 1 }} />
-                <Area type="monotone" dataKey="count" stroke="#f59e0b" strokeWidth={2} fill="url(#accentGrad)" />
+                <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#dc2626', strokeWidth: 1 }} />
+                <Area type="monotone" dataKey="count" stroke="#dc2626" strokeWidth={2} fill="url(#accentGrad)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

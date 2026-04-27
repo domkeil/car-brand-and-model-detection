@@ -5,14 +5,55 @@
 }
 
 .header {
-  background-color: var(--surface);
   border-bottom: 1px solid var(--border);
   padding: 0 2rem;
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(12px);
-  background-color: rgba(19, 19, 24, 0.85);
+  background-color: var(--header-bg);
+  transition: background-color 0.3s;
+  overflow: hidden;
+}
+
+/* Checkered flag strips */
+.checkerLeft,
+.checkerRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  opacity: 0.04;
+  background-image:
+    linear-gradient(45deg, var(--text) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--text) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--text) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--text) 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+  pointer-events: none;
+}
+
+.checkerLeft {
+  left: 0;
+  mask-image: linear-gradient(to right, black, transparent);
+  -webkit-mask-image: linear-gradient(to right, black, transparent);
+}
+
+.checkerRight {
+  right: 0;
+  mask-image: linear-gradient(to left, black, transparent);
+  -webkit-mask-image: linear-gradient(to left, black, transparent);
+}
+
+/* Red racing stripe at bottom of header */
+.redStripe {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%);
 }
 
 .headerInner {
@@ -22,6 +63,8 @@
   justify-content: space-between;
   align-items: center;
   height: 64px;
+  position: relative;
+  z-index: 1;
 }
 
 .logoLink {
@@ -35,9 +78,8 @@
 }
 
 .logoIcon {
-  font-size: 1.6rem;
   color: var(--accent);
-  filter: drop-shadow(0 0 8px var(--accent-glow-strong));
+  flex-shrink: 0;
 }
 
 .logoText {
@@ -45,7 +87,7 @@
   font-weight: 700;
   font-size: 1.35rem;
   color: var(--text);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   display: block;
   line-height: 1;
@@ -53,13 +95,19 @@
 
 .logoSub {
   font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: var(--text-muted);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   display: block;
   line-height: 1;
-  margin-top: 2px;
+  margin-top: 3px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .nav {
@@ -93,8 +141,26 @@
   background-color: var(--accent-glow);
 }
 
-.navIcon {
-  font-size: 1rem;
+.themeToggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background-color: var(--surface2);
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.themeToggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--accent-glow);
 }
 
 .main {
@@ -110,6 +176,10 @@
     padding: 0 1rem;
   }
 
+  .checkerLeft, .checkerRight {
+    width: 24px;
+  }
+
   .main {
     padding: 1.5rem 1rem;
   }
@@ -117,9 +187,5 @@
   .navLink {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
-  }
-
-  .navIcon {
-    display: none;
   }
 }
