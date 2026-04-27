@@ -5,4 +5,4 @@
 # - model.pt (alebo pytorch_model.bin)
 # - class_names.json (alebo labels.txt)
 #
-# Tieto súbory NEPUSHUJ na git (sú v .gitignore)
+# Tieto súbory nepushujte na git (sú aj v .gitignore)
